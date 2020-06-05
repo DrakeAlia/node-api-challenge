@@ -12,3 +12,22 @@ I need this code, but don't know where, perhaps should make some middleware, don
 
 Go code!
 */
+require('dotenv').config();
+
+const express = require('express');
+
+const server = express();
+
+server.use(express.json());
+
+const port =  process.env.PORT || 1212;
+server.listen(port, () => {
+    console.log(`\n*** Server Running on http://localhost:${port} ***\n`);
+  });
+
+const projectsRouter = require('./routers/projectsRouter.js');
+
+const actionsRouter = require('./routers/actionsRouter.js');
+
+server.use('/api/projects', projectsRouter);
+server.use('/api/actions', actionsRouter);
