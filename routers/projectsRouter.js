@@ -2,6 +2,8 @@ const express = require('express');
 
 const Projects = require('../data/helpers/projectModel.js');
 
+const Actions = require('../data/helpers/actionModel.js');
+
 const router = express.Router();
 
 // projects will .get all projects ('/')
@@ -56,7 +58,8 @@ router.get('/:id/actions', validateId, (req, res) => {
 });
 
 router.post('/:id/actions', validateId, validateActions,  (req, res) => {
-    Projects.insert(req.body)
+    const actions = {...req.body, project_id: req.params.id};
+    Actions.insert(actions)
     .then((project) => {
         res.status(201).json(project);
     })
